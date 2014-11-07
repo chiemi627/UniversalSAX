@@ -27,7 +27,11 @@ it is described as $ 2^{resolution} $ Default value is 9. It mean that each dime
    * dim : dimension of the data
    * res : resolution of the SAX lattice
    * labels : number of labels for Universal SAX
-   * windows : the length of the time interval for smoothing the sequence.
+   * windows : the length of the time interval for smoothing the time sequence.
+ 
+ * Output
+
+    The encoded strings are saves as a file named    "result_USAX_&lt;dim&gt;_&lt;dim&gt;_&lt;labels&gt;_.csv"
 
 
 
