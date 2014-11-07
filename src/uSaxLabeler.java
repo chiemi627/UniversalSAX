@@ -185,13 +185,9 @@ public class uSaxLabeler {
 			outFile.write("\n# Regions \n\n");
 
 			for(int i=0;i<labels;i++){
-				//char a = (char) ('A'+i);
-
 				int x = i/64;
 				int y = i%64;
-
 				String a = symbolicCode[x]+symbolicCode[y];
-
 				outFile.write(a+","+regions.get(i)[0]+","+regions.get(i)[1]+"\n");
 			}
 			outFile.write("\n# Distance \n\n");

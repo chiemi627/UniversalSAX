@@ -366,7 +366,7 @@ public class SaxIndexGenerator {
 
 	}
 
-	public static void generate_UniversalSAX(int dimension,int resolution,int labels,int window){
+	public static void generate_UniversalSAX(int dimension,int resolution,int labels,int window,String dirname){
 		String outfile = "result_USAX_"+dimension+"_"+resolution+"_"+labels+"_.csv";
 
 		SaxIndexGenerator sig = new SaxIndexGenerator(dimension,resolution,labels,window);
@@ -376,10 +376,11 @@ public class SaxIndexGenerator {
 		try {
 			FileWriter outFile = new FileWriter(outfile);
 
-			File dir = new File("testcsvdata");
+			File dir = new File(dirname);
 			File[] files = dir.listFiles();
 			for (int i = 0; i < files.length; i++) {
-				String tno = extractMatchString("test(.*).csv",files[i].getName());
+				//String tno = extractMatchString("test(.*).csv",files[i].getName());
+				String tno = extractMatchString("(.*).csv",files[i].getName());
 
 				//ちゃんと読みこめているかカウントテスト
 				//BufferedReader br;
@@ -418,20 +419,29 @@ public class SaxIndexGenerator {
 
 
 	public static void main(String[] args) {
-
+		
 		//
 		int dimension = 3;
 		int resolution = 9; //多次元空間の格子の解像度。格子の数は各次元 2^resolution 個になる。　
 		int labels = 811; //割り当てる符号の数
 		int window = 5; //平均化するウインドウ幅
+		String dirname = "testcsvfiles"; //時系列ファイルの入っているディレクトリ名
 
 		if(args.length==0){
 			System.err.println("ERROR: Input filename");
 			System.exit(-1);
 		}
+		
+		if(args.length==5){
+			dimension = new Integer(args[0]);
+			resolution = new Integer(args[1]);
+			labels = new Integer(args[2]);
+			window = new Integer(args[3]);
+			dirname = args[4];
+		}
 
 		//UniversalSAXで符号化する場合はこちらを使う
-		SaxIndexGenerator.generate_UniversalSAX(dimension, resolution, labels, window);
+		SaxIndexGenerator.generate_UniversalSAX(dimension, resolution, labels, window, dirname);
 		//MDSAXで符号化する場合はこちらを使う
 		//SaxIndexGenerator.generate_MDSAX(dimension, resolution, labels, window);
 
