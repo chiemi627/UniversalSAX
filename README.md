@@ -1,7 +1,7 @@
 # UniversalSAX
 This product encodes the time sequence dataset to charactor string by using UniversalSAX technology. The detail of techniques is written in the following paper. (I am sorry that the paper is written in Japanese.)
-大西史花, 渡辺知恵美: UniversalSAX: 空間充填曲線を利用したSAXの多次元時系列データへの適用, DEIM Forum 2012, D4-4
-http://db-event.jpn.org/deim2012/proceedings/final-pdf/d4-4.pdf
+* 大西史花, 渡辺知恵美: UniversalSAX: 空間充填曲線を利用したSAXの多次元時系列データへの適用, DEIM Forum 2012, D4-4
+* http://db-event.jpn.org/deim2012/proceedings/final-pdf/d4-4.pdf
 
 ## Usage:
 
