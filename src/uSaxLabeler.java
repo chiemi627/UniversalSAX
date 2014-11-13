@@ -26,7 +26,7 @@ public class uSaxLabeler {
 		this.array = new int[elements];
 	}
 
-	public void generateValues(){
+	public void generateValues() throws UnSupportedDimensionException{
 		Random rnd = new Random();
 		for(int i=0;i<elements;i++){
 			int[] value = new int[dimension];
@@ -38,28 +38,21 @@ public class uSaxLabeler {
 				d++;
 			}
 
-
 			if(dimension==3)
 				array[i] = Hilbert.encode3Dmain(value[0], value[1],value[2], this.resolution);
 
 			else if(dimension==2)
 				//array[i] = Hilbert.encode2Dmain(value[0], value[1], this.resolution);
 				array[i] = HilbertOrder.encode(value[0], value[1], this.resolution);
+			
+			else if(dimension==1){
+				array[i] = value[0];				
+			}
 
-			//–¢®”õ
-			else if(dimension > 3)
-				array[i] = HilbertOrder.encode(value[0], value[1],value[2]);
+			else{
+				throw new UnSupportedDimensionException();
+			}
 
-
-			/*
-			if(dimension==2)
-				array[i] = HilbertOrder.encode(value[0], value[1], this.resolution);
-			else if(dimension > 2)
-				array[i] = HilbertOrderMulti.intro(value[0], value[1],value[2]);
-			*/
-
-			else
-				array[i] = value[0];
 			int backet = (int) ((array[i]/Math.pow(2,this.resolution*dimension))*100);
 			histogram[backet]++;
 		}
@@ -78,7 +71,6 @@ public class uSaxLabeler {
 			regions.add(new int[]{prev,next});
 			prev=next;
 		}
-
 
 		return regions;
 	}
@@ -163,7 +155,14 @@ public class uSaxLabeler {
 
 		// TODO Auto-generated method stub
 		uSaxLabeler lblr = new uSaxLabeler(dimension,resolution);
-		lblr.generateValues();
+		try {
+			lblr.generateValues();
+		} catch (UnSupportedDimensionException e1) {
+			// TODO Auto-generated catch block
+			System.out.println("Current version only supports less than 2nd dimension.");
+			e1.printStackTrace();
+			return;
+		}
 		ArrayList<int[]> tmp = lblr.makeLabels(labels);
 		ArrayList<int[]> regions = lblr.devideLabels(tmp, dimension, block_resolution);
 		labels = regions.size();
