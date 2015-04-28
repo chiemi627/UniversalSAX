@@ -20,8 +20,8 @@ public class TightnessOfLowerBoundCalucular {
 
 
 	public static void main(String[] args) {
-		// TODO ©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu
-		//‚·‚ñ‚²‚¢“r’†
+		// TODO è‡ªå‹•ç”Ÿæˆã•ã‚ŒãŸãƒ¡ã‚½ãƒƒãƒ‰ãƒ»ã‚¹ã‚¿ãƒ–
+		//ã™ã‚“ã”ã„é€”ä¸­
 
 		String str1 = "distance_orig_sort";
 		String str2 = "distance_USAX_sort";
@@ -45,7 +45,7 @@ public class TightnessOfLowerBoundCalucular {
 			line = br1.readLine();
 			int lno=0;
 			while((line = br1.readLine())!=null){
-				//‹——£î•ñ‚ğæ‚èo‚·
+				//è·é›¢æƒ…å ±ã‚’å–ã‚Šå‡ºã™
 				String[] str = line.split(",");
 				//distanceList.put(alpha.get(lno)+""+alpha.get(lno), new Double(0));
 				distanceListMap1.put(alpha.get(lno)+""+alpha.get(lno), new Double(0));

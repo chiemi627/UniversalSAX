@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 /**
- * �q���x���g�Ȑ���̋�Ԃł���킳�ꂽ��������ԏ�̓�̗̈�̋��������߂邽�߂̃N���X
+ * ヒルベルト曲線上の区間であらわされた多次元空間上の二つの領域の距離を求めるためのクラス
  * @author Chiemi Watanabe
  * 
  */
@@ -19,10 +19,10 @@ public class MDSax {
 	
 
 	/**
-	 * �q���x���g�Ȑ���̋�Ԃŕ\���ꂽ2�̑�������ԏ�̗̈�̍ŏ����������߂�
-	 * @param region1 �q���x���g�Ȑ���̋�Ԃł���킳�ꂽ�̈�
-	 * @param region2 �q���x���g�Ȑ���̋�Ԃł���킳�ꂽ�̈�
-	 * @return �ŏ�����
+	 * ヒルベルト曲線上の区間で表された2つの多次元空間上の領域の最小距離を求める
+	 * @param region1 ヒルベルト曲線上の区間であらわされた領域
+	 * @param region2 ヒルベルト曲線上の区間であらわされた領域
+	 * @return 最小距離
 	 */
 	public double calcdist(int[] region1,int[] region2){
 		ArrayList<int[]> boxes1 = this.putBoxes(region1[0], region1[1]);
@@ -34,10 +34,10 @@ public class MDSax {
 	}
 
 	/**
-	 * �q���x���g�Ȑ���̋�Ԃŕ\���ꂽ��������ԏ�̗̈�𑽎�����ԏ�̋�`�̏W���ɕ�������
-	 * @param v1 �q���x���g�Ȑ���̋�Ԃ̍ŏ��l
-	 * @param v2 �q���x���g�Ȑ���̋�Ԃ̍ő�l
-	 * @return ��`�̏W��
+	 * ヒルベルト曲線上の区間で表された多次元空間上の領域を多次元空間上の矩形の集合に分割する
+	 * @param v1 ヒルベルト曲線上の区間の最小値
+	 * @param v2 ヒルベルト曲線上の区間の最大値
+	 * @return 矩形の集合
 	 */
 	public ArrayList<int[]> putBoxes(int v1,int v2){
 		int i=1,j;
@@ -84,11 +84,11 @@ public class MDSax {
 	
 	
 	/**
-	 * �q���x���g�Ȑ���̋�Ԃł���킳�ꂽ��̋�`�̍ŏ����������߂�B
-	 * ���̋�Ԃ�putBoxes���\�b�h�ŋ��߂�ꂽ��`�łȂ���΂Ȃ�Ȃ��B
-	 * @param b1 ��̗̈�̃q���x���g�l�i[0]���ŏ��l�C[1]���ő�l)
-	 * @param b2 ������̗̈�̃q���x���g�l�i[0]���ŏ��l�C[1]���ő�l)
-	 * @return ����
+	 * ヒルベルト曲線上の区間であらわされた二つの矩形の最小距離を求める。
+	 * この区間はputBoxesメソッドで求められた矩形でなければならない。
+	 * @param b1 一つの領域のヒルベルト値（[0]が最小値，[1]が最大値)
+	 * @param b2 もう一つの領域のヒルベルト値（[0]が最小値，[1]が最大値)
+	 * @return 距離
 	 */
 	public double calcdist_hilbert(int[] b1,int[] b2){
 		int[] b1_min = HilbertOrder.decode(b1[0],resolution);
@@ -100,10 +100,10 @@ public class MDSax {
 	}
 
 	/**
-	 * ��`�ɕ��������̈�Ԃ̍ŏ����������߂�
+	 * 矩形に分割した領域間の最小距離を求める
 	 * @param BoxList_R1
 	 * @param BoxList_R2
-	 * @return�@����
+	 * @return　距離
 	 */
 	public double calcdist_boxes(ArrayList<int[]> BoxList_R1,ArrayList<int[]> BoxList_R2){
 		double dist=-1;
@@ -118,11 +118,11 @@ public class MDSax {
 	}	
 
 	/**
-	 * ��������ԏ�̓�̋�`�̊Ԃ̋��������߂�
-	 * @param b1_min ��������ԏ��1�ڂ̋�`�̍ŏ��l
-	 * @param b1_max�@��������ԏ��1�ڂ̋�`�̍ő�l
-	 * @param b2_min�@��������ԏ��2�ڂ̋�`�̍ŏ��l
-	 * @param b2_max�@��������ԏ��2�ڂ̋�`�̍ő�l
+	 * 多次元空間上の二つの矩形の間の距離を求める
+	 * @param b1_min 多次元空間上の1つ目の矩形の最小値
+	 * @param b1_max　多次元空間上の1つ目の矩形の最大値
+	 * @param b2_min　多次元空間上の2つ目の矩形の最小値
+	 * @param b2_max　多次元空間上の2つ目の矩形の最大値
 	 * @return
 	 */
 	public double calcdist_euclid(int[] b1_min,int[] b1_max,int[] b2_min,int[] b2_max){

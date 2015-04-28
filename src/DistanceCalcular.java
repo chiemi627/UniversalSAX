@@ -18,14 +18,14 @@ import org.mapdb.*;
 
 public class DistanceCalcular {
 
-	//mapDB‚Ìì¬
+	//mapDBã®ä½œæˆ
 	DB db = DBMaker.newFileDB(new File("distanceListDB")).writeAheadLogDisable().make();
 	ArrayList<String> dataname=new ArrayList<String>();
 
 	public static double comp2TimeSeries_default(double[][] a,double[][] b){
 		double res=0;
 		double[][] tmp;
-		if(a.length>b.length){tmp = a; b = a; a = tmp;} //a‚Ì•û‚ª’Z‚­‚È‚é‚æ‚¤‚É‚·‚é
+		if(a.length>b.length){tmp = a; b = a; a = tmp;} //aã®æ–¹ãŒçŸ­ããªã‚‹ã‚ˆã†ã«ã™ã‚‹
 		for(int i=0;i<a.length;i++)
 			for(int j=0;j<a[0].length;j++){
 				res += ((a[i][j]-b[i][j])*(a[i][j]-b[i][j]));
@@ -233,7 +233,7 @@ public class DistanceCalcular {
 				else if(line.equals("")){continue;}
 				else{
 					if(state=='i')continue;
-					if(state=='d'){//‹——£î•ñ‚ğæ‚èo‚·
+					if(state=='d'){//è·é›¢æƒ…å ±ã‚’å–ã‚Šå‡ºã™
 						String[] str = line.split(",");
 						//distanceList.put(alpha.get(lno)+""+alpha.get(lno), new Double(0));
 						distanceListMap.put(alpha.get(lno)+""+alpha.get(lno), new Double(0));
@@ -249,7 +249,7 @@ public class DistanceCalcular {
 						}
 						lno++;
 					}
-					else if(state=='r'){//ƒAƒ‹ƒtƒ@ƒxƒbƒgî•ñ‚ğæ‚èo‚·
+					else if(state=='r'){//ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆæƒ…å ±ã‚’å–ã‚Šå‡ºã™
 						String[] str = line.split(",");
 						alpha.add(str[0]);
 					}
@@ -286,7 +286,7 @@ public class DistanceCalcular {
 				else if(line.equals("")){continue;}
 				else{
 					if(state=='i')continue;
-					if(state=='d'){//‹——£î•ñ‚ğæ‚èo‚·
+					if(state=='d'){//è·é›¢æƒ…å ±ã‚’å–ã‚Šå‡ºã™
 						String[] str = line.split(",");
 						distanceList.put(alpha.get(lno)+""+alpha.get(lno), new Double(0));
 						for(int j=lno+1;j<alpha.size();j++){
@@ -297,7 +297,7 @@ public class DistanceCalcular {
 						}
 						lno++;
 					}
-					else if(state=='r'){//ƒAƒ‹ƒtƒ@ƒxƒbƒgî•ñ‚ğæ‚èo‚·
+					else if(state=='r'){//ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆæƒ…å ±ã‚’å–ã‚Šå‡ºã™
 						String[] str = line.split(",");
 						alpha.add(str[0]);
 					}
@@ -323,7 +323,7 @@ public class DistanceCalcular {
 
 	public double[][] calcAllDistance_orig(String path){
 
-		//‚Ü‚¸‚Í‘S•”‚Ìƒf[ƒ^‚ğ“Ç‚Ş
+		//ã¾ãšã¯å…¨éƒ¨ã®ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã‚€
 		File dir = new File(path);
 		File[] files = dir.listFiles();
 		HashMap<String,ArrayList<double[]>> data = new HashMap<String,ArrayList<double[]>>();
@@ -337,7 +337,7 @@ public class DistanceCalcular {
 				ArrayList<double[]> dlist = new ArrayList<double[]>();
 				while((line = br.readLine())!=null){
 					String[] str = line.split(",");
-					/*//3ŸŒ³‚ÉŒÀ’èƒo[ƒWƒ‡ƒ“
+					/*//3æ¬¡å…ƒã«é™å®šãƒãƒ¼ã‚¸ãƒ§ãƒ³
 					double[] d = new double[3];
 					d[0]=new Double(str[0]).doubleValue();
 					d[1]=new Double(str[1]).doubleValue();
@@ -345,7 +345,7 @@ public class DistanceCalcular {
 					dlist.add(d);
 					*/
 
-					//‘½ŸŒ³‘Î‰‚Î[‚¶‚å‚ñ
+					//å¤šæ¬¡å…ƒå¯¾å¿œã°ãƒ¼ã˜ã‚‡ã‚“
 					double[] d = new double[str.length];
 					for(int j=0;j<str.length; j++){
 						d[j] = new Double(str[j]).doubleValue();
@@ -358,7 +358,7 @@ public class DistanceCalcular {
 				data.put(tno, dlist);
 			}catch(Exception e){e.printStackTrace();System.exit(-1);}
 		}
-		//‹——£‚ğ‹‚ß‚é
+		//è·é›¢ã‚’æ±‚ã‚ã‚‹
 		Object[] keys = data.keySet().toArray();
 		for(int i=0;i<keys.length;i++){
 			this.dataname.add((String)keys[i]);
@@ -375,7 +375,7 @@ public class DistanceCalcular {
 	public double[][] calcAllDistanceDB(String infile, Map<String, Double> distanceListDB){
 		ArrayList<String> data = new ArrayList<String>();
 
-		//ƒf[ƒ^ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
+		//ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 		BufferedReader br;
 		try {
 			String line;
@@ -406,7 +406,7 @@ public class DistanceCalcular {
 	public double[][] calcAllDistance(String infile, HashMap<String, Double> distanceList){
 		ArrayList<String> data = new ArrayList<String>();
 
-		//ƒf[ƒ^ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
+		//ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 		BufferedReader br;
 		try {
 			String line;
@@ -436,7 +436,7 @@ public class DistanceCalcular {
 	public double[][] calcAllDistance_byMdSAX(String infile, HashMap<String, Double> distanceList){
 		ArrayList<String[]> data = new ArrayList<String[]>();
 
-		//ƒf[ƒ^ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
+		//ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 		BufferedReader br;
 		try {
 			String line;
@@ -450,15 +450,15 @@ public class DistanceCalcular {
 						d=new ArrayList<String>();
 						d.add(seq[2]);
 					}else{
-						//‘O‚Ìƒf[ƒ^‚ğdata‚É’Ç‰Á‚·‚é
+						//å‰ã®ãƒ‡ãƒ¼ã‚¿ã‚’dataã«è¿½åŠ ã™ã‚‹
 						Object[] obj = d.toArray();
 						String[] str = new String[obj.length];
 						for(int i=0;i<str.length;i++)
 							str[i]=(String)obj[i];
 						data.add(str);
-						//Ÿ‚Ì‚½‚ß‚ÉƒNƒŠƒA‚·‚é
+						//æ¬¡ã®ãŸã‚ã«ã‚¯ãƒªã‚¢ã™ã‚‹
 						d.clear();
-						//1ŸŒ³–Ú‚Ì’l‚ğ’Ç‰Á‚·‚é
+						//1æ¬¡å…ƒç›®ã®å€¤ã‚’è¿½åŠ ã™ã‚‹
 						d.add(seq[2]);
 					}
 				}
@@ -466,7 +466,7 @@ public class DistanceCalcular {
 					d.add(seq[2]);
 				}
 			}
-			//ÅŒã‚Ìƒf[ƒ^‚ğdata‚É’Ç‰Á‚·‚é
+			//æœ€å¾Œã®ãƒ‡ãƒ¼ã‚¿ã‚’dataã«è¿½åŠ ã™ã‚‹
 			Object[] obj = d.toArray();
 			String[] str = new String[obj.length];
 			for(int i=0;i<str.length;i++)
@@ -543,7 +543,7 @@ public class DistanceCalcular {
 	public void do_main_by_usax(int dimension,int resolution,int labels){
 
 
-		//mapDBg‚¢‚Ü‚·
+		//mapDBä½¿ã„ã¾ã™
 		Map<String,Double> distanceListMap = db.getTreeMap("distanceListMap");
 
 		//HashMap<String,Double> distanceList = readDistFile("LabelInfo_"+dimension+"_"+resolution+"_"+labels+"_.txt");
@@ -583,7 +583,7 @@ public class DistanceCalcular {
 	public double[][] calcAllDistance_by_1d_ver2(String infile, HashMap<String, Double> distanceList){
 		ArrayList<String> data = new ArrayList<String>();
 
-		//ƒf[ƒ^ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
+		//ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 		BufferedReader br;
 		try {
 			String line;
@@ -618,7 +618,7 @@ public class DistanceCalcular {
 
 
 
-	//dS‹——£–@‚Æ‚©‚Åì¬‚µ‚½•¶š—ñ“¯m‚Ì”äŠr‚ğ‚·‚é‚½‚ß‚É‹——£‚ğ‘ª‚éŠÖ”
+	//é‡å¿ƒè·é›¢æ³•ã¨ã‹ã§ä½œæˆã—ãŸæ–‡å­—åˆ—åŒå£«ã®æ¯”è¼ƒã‚’ã™ã‚‹ãŸã‚ã«è·é›¢ã‚’æ¸¬ã‚‹é–¢æ•°
 	public static double getDist1d(String[] a,String[] b,int i,int j,HashMap<String,Double> distanceList){
 		if(i==0 && j==0) return 0;
 		else if(i==0 || j==0) return 100000;
@@ -639,7 +639,7 @@ public class DistanceCalcular {
 	public void do_main_by_1d_ver2(int dimension,int resolution,int labels){
 		HashMap<String,Double> distanceList = readDistFile("LabelInfo_1_"+resolution+"_"+labels+"_.txt");
 
-		//‹——£‚ğ‘ª‚è‚½‚¢•¶š—ñ‚Ìcsvƒtƒ@ƒCƒ‹–¼‚ğw’è
+		//è·é›¢ã‚’æ¸¬ã‚ŠãŸã„æ–‡å­—åˆ—ã®csvãƒ•ã‚¡ã‚¤ãƒ«åã‚’æŒ‡å®š
 		double[][] dist = calcAllDistance_by_1d_ver2("SaxIndex_Gravity_.csv",distanceList);
 
 		try {
@@ -666,7 +666,7 @@ public class DistanceCalcular {
 
 
 
-	//dS‹——£–@‚Æ‚©‚Åì¬‚µ‚½•¶š—ñ“¯m‚Ì”äŠr‚ğ‚·‚é‚½‚ß‚Ìƒ^ƒCƒ€ƒ[ƒsƒ“ƒOˆ—
+	//é‡å¿ƒè·é›¢æ³•ã¨ã‹ã§ä½œæˆã—ãŸæ–‡å­—åˆ—åŒå£«ã®æ¯”è¼ƒã‚’ã™ã‚‹ãŸã‚ã®ã‚¿ã‚¤ãƒ ãƒ¯ãƒ¼ãƒ”ãƒ³ã‚°å‡¦ç†
 	public static double compTimeWarpingDistance_by1d(String[] a,String[] b,HashMap<String,Double> distanceList){
 		int i=0,j=0;
 		double dist=0;
@@ -701,7 +701,7 @@ public class DistanceCalcular {
 
 
 
-	//dS‹——£–@‚Æ‚©‚Åì¬‚µ‚½•¶š—ñ“¯m‚Ì”äŠr‚ğ‚·‚é‚½‚ß‚ÌƒƒCƒ“ŠÖ”
+	//é‡å¿ƒè·é›¢æ³•ã¨ã‹ã§ä½œæˆã—ãŸæ–‡å­—åˆ—åŒå£«ã®æ¯”è¼ƒã‚’ã™ã‚‹ãŸã‚ã®ãƒ¡ã‚¤ãƒ³é–¢æ•°
 	public void do_main_by_1d(int dimension,int resolution,int labels){
 		HashMap<String,Double> distanceList = readDistFile("LabelInfo_"+dimension+"_"+resolution+"_"+labels+"_.txt");
 		String str1 = null;
@@ -711,12 +711,12 @@ public class DistanceCalcular {
 
 
 		BufferedReader br;
-		//”äŠr‚µ‚½‚¢•¶š—ñ1‚Â–Ú‚ğ“Ç‚İ‚±‚Ş
+		//æ¯”è¼ƒã—ãŸã„æ–‡å­—åˆ—1ã¤ç›®ã‚’èª­ã¿ã“ã‚€
 		try {
 			String line;
             br = new BufferedReader(new FileReader("SaxIndex_Principal_data0_3_interval5_1.txt"));
             while ((line = br.readLine()) != null) {
-                System.out.print("“Ç‚İ‚ñ‚¾•¶š—ñ1‚Â–ÚF"+line + "\n");
+                System.out.print("èª­ã¿è¾¼ã‚“ã æ–‡å­—åˆ—1ã¤ç›®ï¼š"+line + "\n");
                 str1 = line;
 
             }
@@ -725,13 +725,13 @@ public class DistanceCalcular {
             System.out.println(e);
         }
 
-		//”äŠr‚µ‚½‚¢•¶š—ñ2‚Â–Ú‚ğ“Ç‚İ‚Ş
+		//æ¯”è¼ƒã—ãŸã„æ–‡å­—åˆ—2ã¤ç›®ã‚’èª­ã¿è¾¼ã‚€
 		try {
 			String line;
 			br = new BufferedReader(new FileReader("SaxIndex_Principal_data0_3_interval5_3.txt"));
 
             while ((line = br.readLine()) != null) {
-                System.out.print("“Ç‚İ‚ñ‚¾•¶š—ñ2‚Â–ÚF"+line + "\n");
+                System.out.print("èª­ã¿è¾¼ã‚“ã æ–‡å­—åˆ—2ã¤ç›®ï¼š"+line + "\n");
                 str2 = line;
 
             }
@@ -740,13 +740,13 @@ public class DistanceCalcular {
             System.out.println(e);
         }
 
-		//ŒİŠ·«‚Ì‚½‚ß‚É”z—ñ‚É“ü‚ê‚Ü‚·
+		//äº’æ›æ€§ã®ãŸã‚ã«é…åˆ—ã«å…¥ã‚Œã¾ã™
 		String[] saxstr1 = {str1};
 		String[] saxstr2 = {str2};
 
 		dist = DistanceCalcular.compTimeWarpingDistance_by1d(saxstr1, saxstr2,distanceList);
 
-		System.out.print("‹——£‘ª’èŒ‹‰ÊF"+dist + "\n");
+		System.out.print("è·é›¢æ¸¬å®šçµæœï¼š"+dist + "\n");
 
 		try {
 			FileWriter outFile = new FileWriter("distance_SaxIndex_Gravity_interval5.txt");
@@ -766,15 +766,15 @@ public class DistanceCalcular {
 		int resolution=9;
 		int labels=2175;
 		DistanceCalcular dcalc = new DistanceCalcular();
-		//Universal SAX‚ğg‚¤ê‡
+		//Universal SAXã‚’ä½¿ã†å ´åˆ
 		//dcalc.do_main_by_usax(dimension,resolution,labels);
-		//MultiDimensional SAX‚ğg‚¤ê‡
+		//MultiDimensional SAXã‚’ä½¿ã†å ´åˆ
 		//dcalc.do_main_by_mdsax(dimension,resolution,labels);
-		//•’Ê‚É‹——£‚ğ‘ª‚éê‡
+		//æ™®é€šã«è·é›¢ã‚’æ¸¬ã‚‹å ´åˆ
 		dcalc.do_main_by_orig("testcsvdata");
-		//dS‹——£–@‚âå¬•ª•ªÍg—p‚µ‚½SAX•¶š—ñ‚Ì‹——£‚ğ‘ª‚éê‡i2‚Â‚Ì•¶š—ñ‚ğ“ü‚ê‚Ä‹——£‚ğ‘ª‚éj
+		//é‡å¿ƒè·é›¢æ³•ã‚„ä¸»æˆåˆ†åˆ†æä½¿ç”¨ã—ãŸSAXæ–‡å­—åˆ—ã®è·é›¢ã‚’æ¸¬ã‚‹å ´åˆï¼ˆ2ã¤ã®æ–‡å­—åˆ—ã‚’å…¥ã‚Œã¦è·é›¢ã‚’æ¸¬ã‚‹ï¼‰
 		//dcalc.do_main_by_1d(dimension,resolution,labels);
-		//dS‹——£–@‚âå¬•ª•ªÍg—p‚µ‚½SAX•¶š—ñ‚Ì‹——£‚ğ‘ª‚éê‡(csvŒ`®‚Ìƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚ñ‚Å‘S‘g‡‚¹‚ğ‘ª‚é)
+		//é‡å¿ƒè·é›¢æ³•ã‚„ä¸»æˆåˆ†åˆ†æä½¿ç”¨ã—ãŸSAXæ–‡å­—åˆ—ã®è·é›¢ã‚’æ¸¬ã‚‹å ´åˆ(csvå½¢å¼ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚“ã§å…¨çµ„åˆã›ã‚’æ¸¬ã‚‹)
 		//dcalc.do_main_by_1d_ver2(dimension,resolution,labels);
 
 

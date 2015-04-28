@@ -177,7 +177,7 @@ public class Hilbert {
 	}
 
 
-	//3ŸŒ³ƒf[ƒ^—pƒqƒ‹ƒxƒ‹ƒgƒGƒ“ƒR[ƒhŠÖ”‚Ö‚ÌƒƒCƒ“ŠÖ”
+	//3æ¬¡å…ƒãƒ‡ãƒ¼ã‚¿ç”¨ãƒ’ãƒ«ãƒ™ãƒ«ãƒˆã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰é–¢æ•°ã¸ã®ãƒ¡ã‚¤ãƒ³é–¢æ•°
 	public static int encode3Dmain(int x, int y, int z, int r){
 
 		Hilbert h = new Hilbert(r,3);
@@ -190,7 +190,7 @@ public class Hilbert {
 
 	}
 
-	//2ŸŒ³ƒf[ƒ^—pƒqƒ‹ƒxƒ‹ƒgƒGƒ“ƒR[ƒhŠÖ”‚Ö‚ÌƒƒCƒ“ŠÖ”
+	//2æ¬¡å…ƒãƒ‡ãƒ¼ã‚¿ç”¨ãƒ’ãƒ«ãƒ™ãƒ«ãƒˆã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰é–¢æ•°ã¸ã®ãƒ¡ã‚¤ãƒ³é–¢æ•°
 	public static int encode2Dmain(int x, int y, int r){
 
 		Hilbert h = new Hilbert(r,2);
@@ -221,7 +221,7 @@ public class Hilbert {
 		System.out.println(h.getBitString(hvalue));
 		*/
 
-		//ˆø”1‚Â–Ú‰ğ‘œ“xA2‚Â–ÚŸŒ³
+		//å¼•æ•°1ã¤ç›®è§£åƒåº¦ã€2ã¤ç›®æ¬¡å…ƒ
 		Hilbert h = new Hilbert(3,3);
 
 		for(int i=0;i<Math.pow(8, 3);i++){

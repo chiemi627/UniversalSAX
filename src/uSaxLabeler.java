@@ -1,6 +1,4 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -17,7 +15,7 @@ public class uSaxLabeler {
 	int[] array = null;
 	public int dimension;
 	public int resolution;
-	public final static int elements = 1000000;
+	public static int elements = 1000000;
 	int[] histogram = new int[100];
 
 	static String[] symbolicCode = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","0","1","2","3","4","5","6","7","8","9","+","/"};
@@ -25,11 +23,74 @@ public class uSaxLabeler {
 	public uSaxLabeler(int d,int r){
 		this.dimension=d;
 		this.resolution=r;
-		this.array = new int[elements];
 	}
+
+	public void loadValuesFromFile(String filename) throws UnSupportedDimensionException{
+		BufferedReader br = null;
+		int count = 0;
+		int dimension = 0;
+		ArrayList<Integer> array_tmp = new ArrayList<Integer>();
+		try {
+			br = new BufferedReader(new FileReader(filename));
+			String line;
+			while ((line = br.readLine()) != null) {
+				String[] pos = line.split(",");
+				if(pos.length>3) {
+					throw new UnSupportedDimensionException();
+				}
+				if(dimension==0){
+					dimension = pos.length;
+				}
+				else{
+					if(dimension!=pos.length) {
+						throw new UnSupportedDimensionException();
+					}
+				}
+				int[] value = new int[pos.length];
+				for(int i=0;i<pos.length;i++){
+					double x = new Double(pos[i]);
+					x = Math.pow(2, this.resolution)*x;
+					value[i] = (int) Math.floor(x);
+				}
+
+				if(dimension==3)
+					array_tmp.add(Hilbert.encode3Dmain(value[0], value[1],value[2], this.resolution));
+
+				else if(dimension==2)
+					array_tmp.add(HilbertOrder.encode(value[0], value[1], this.resolution));
+
+				else if(dimension==1){
+					array_tmp.add(value[0]);
+				}
+
+				else{
+					throw new UnSupportedDimensionException();
+				}
+
+				int bucket = (int) ((array_tmp.get(count)/Math.pow(2,this.resolution*dimension))*100);
+				histogram[bucket]++;
+				count++;
+			}
+
+			br.close();
+			this.elements = count;
+			this.array = new int[array_tmp.size()];
+			for(int i=0;i<this.elements;i++){
+				this.array[i] = array_tmp.get(i);
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 
 	public void generateValues() throws UnSupportedDimensionException{
 		Random rnd = new Random();
+		this.array = new int[this.elements];
 		for(int i=0;i<elements;i++){
 			int[] value = new int[dimension];
 			for(int d=0;d<dimension;){
@@ -92,11 +153,11 @@ public class uSaxLabeler {
 			int end = region[1];
 			int i=1;
 			while(true){
-				//�敪����T��
+				//区分候補を探す
 				int cand = ((start>>(dim*bres))+i)<<(dim*bres);
-				//�敪��₪�I�_�𒴂�����I��
+				//区分候補が終点を超えたら終了
 				if(cand>end){output.add(region); break;}
-				//�u���b�N�𑜓x�̔����̑傫��
+				//ブロック解像度の半分の大きさ
 				int half = (1<<(dim*bres-1));
 				if(cand-start>half){
 					if(end-cand>half){
@@ -141,9 +202,9 @@ public class uSaxLabeler {
 	 */
 	public static void main(String[] args) {
 
-		int dimension=3;
-		int resolution=9;
-		int labels=2048;
+		int dimension=2;
+		int resolution=8;
+		int labels=65;
 		int block_resolution=6;
 		
 		if(args.length==4){
@@ -158,7 +219,10 @@ public class uSaxLabeler {
 		// TODO Auto-generated method stub
 		uSaxLabeler lblr = new uSaxLabeler(dimension,resolution);
 		try {
+			//ガウス分布に従って符合割り当てを行う場合はこちらを使ってください
 			lblr.generateValues();
+			//データを使って符合割り当てをするときはこちらを使ってください
+			// lblr.loadValuesFromFile("data.csv");
 		} catch (UnSupportedDimensionException e1) {
 			// TODO Auto-generated catch block
 			System.out.println("Current version only supports less than 2nd dimension.");
@@ -283,7 +347,7 @@ public class uSaxLabeler {
 		}
 		lblr.printHistogram();
 
-		System.out.println("�����\�쐬�ɂ����������Ԃ�"+ (stop-start) +"�~���b�ł��B\n");
+		System.out.println("距離表作成にかかった時間は"+ (stop-start) +"ミリ秒です。\n");
 	}
 
 }

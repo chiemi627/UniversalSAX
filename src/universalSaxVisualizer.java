@@ -32,7 +32,7 @@ public class universalSaxVisualizer  extends JPanel{
 
 		  int dimension = 2;
 		  int resolution = 8;
-		  int labels = 65;
+		  int labels = 67;
 
 		  this.readLabelInfo("LabelInfo_"+dimension+"_"+resolution+"_"+labels+"_.txt");
 

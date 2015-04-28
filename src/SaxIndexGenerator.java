@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 
 /**
- * ‘½ŸŒ³‹óŠÔƒf[ƒ^‚©‚çUniversalSAX‚Ìõˆø‚ğ¶¬‚·‚é
+ * å¤šæ¬¡å…ƒç©ºé–“ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰UniversalSAXã®ç´¢å¼•ã‚’ç”Ÿæˆã™ã‚‹
  * @author chiemi
  *
  */
@@ -45,7 +45,7 @@ public class SaxIndexGenerator {
 	}
 
 	/**
-	 * CSVƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚ñ‚Ålist‚É’Ç‰Á‚·‚éB
+	 * CSVãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚“ã§listã«è¿½åŠ ã™ã‚‹ã€‚
 	 * @param filename
 	 */
 	public void readTimeSeriesData(String filename){
@@ -75,8 +75,8 @@ public class SaxIndexGenerator {
 	}
 
 	/**
-	 * ƒ‰ƒxƒ‹î•ñ‚ğ“Ç‚İ‚Ş
-	 * @param filename ƒ‰ƒxƒ‹î•ñ‚ªŠÜ‚Ü‚ê‚Ä‚¢‚éƒtƒ@ƒCƒ‹–¼
+	 * ãƒ©ãƒ™ãƒ«æƒ…å ±ã‚’èª­ã¿è¾¼ã‚€
+	 * @param filename ãƒ©ãƒ™ãƒ«æƒ…å ±ãŒå«ã¾ã‚Œã¦ã„ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«å
 	 */
 	public void readLabelInfo(String filename){
 		BufferedReader br;
@@ -115,9 +115,9 @@ public class SaxIndexGenerator {
 	}
 
 	/**
-	 * ƒf[ƒ^‚ğŸŒ³‚²‚Æ‚É³‹K‰»‚·‚é
+	 * ãƒ‡ãƒ¼ã‚¿ã‚’æ¬¡å…ƒã”ã¨ã«æ­£è¦åŒ–ã™ã‚‹
 	 * @param tno
-	 * @return ³‹K‰»‚³‚ê‚½’l
+	 * @return æ­£è¦åŒ–ã•ã‚ŒãŸå€¤
 	 */
 	public double[][] getNormalizationData(){
 		double[][] result = new double[list.size()][dimension];
@@ -126,7 +126,7 @@ public class SaxIndexGenerator {
 			for(int j=0;j<this.list.size();j++){
 				data.add((float) this.list.get(j)[i]);
 			}
-			//ŸŒ³‚²‚Æ‚É³‹K‰»
+			//æ¬¡å…ƒã”ã¨ã«æ­£è¦åŒ–
 			normalization(data);
 			for(int j=0;j<list.size();j++){
 				result[j][i]=data.get(j);
@@ -159,10 +159,10 @@ public class SaxIndexGenerator {
 			for(int j=0;j<list.size();j++){
 				data.add((float) list.get(j)[i]);
 			}
-			//ŸŒ³‚²‚Æ‚É³‹K‰»
+			//æ¬¡å…ƒã”ã¨ã«æ­£è¦åŒ–
 			normalization(data);
 
-			//Window‚²‚Æ‚É•½‹Ï‰»
+			//Windowã”ã¨ã«å¹³å‡åŒ–
 			ArrayList<Float> roughenlist=averaging(data,window);
 			for(int j=0;j<roughenlist.size();j++){
 				float v = roughenlist.get(j);
@@ -175,10 +175,10 @@ public class SaxIndexGenerator {
 
 	public void trans2HilbertValues(){
 
-		//³‹K‰»‚µ‚Ä•½‹Ï‰»‚·‚é¨lattice”z—ñ‚Éƒf[ƒ^‚ª“ü‚é
+		//æ­£è¦åŒ–ã—ã¦å¹³å‡åŒ–ã™ã‚‹â†’latticeé…åˆ—ã«ãƒ‡ãƒ¼ã‚¿ãŒå…¥ã‚‹
 		generateLatticeValues();
 
-		//ƒqƒ‹ƒxƒ‹ƒg’l‚É•ÏŠ·
+		//ãƒ’ãƒ«ãƒ™ãƒ«ãƒˆå€¤ã«å¤‰æ›
 		for(int i=0;i<lattice.length;i++){
 			int v;
 			if(this.dimension == 3){
@@ -197,11 +197,11 @@ public class SaxIndexGenerator {
 
 	public void transMultiHilbertValues(){
 
-		//³‹K‰»‚µ‚Ä•½‹Ï‰»‚·‚é¨lattice”z—ñ‚Éƒf[ƒ^‚ª“ü‚é
+		//æ­£è¦åŒ–ã—ã¦å¹³å‡åŒ–ã™ã‚‹â†’latticeé…åˆ—ã«ãƒ‡ãƒ¼ã‚¿ãŒå…¥ã‚‹
 		generateLatticeValues();
 		Hcode multiDim = new Hcode();
 
-		//ƒqƒ‹ƒxƒ‹ƒg’l‚É•ÏŠ·(Œ»’iŠK‚Å‚Í“ñŸŒ³‚Ì‚İ‘Î‰j
+		//ãƒ’ãƒ«ãƒ™ãƒ«ãƒˆå€¤ã«å¤‰æ›(ç¾æ®µéšã§ã¯äºŒæ¬¡å…ƒã®ã¿å¯¾å¿œï¼‰
 		for(int i=0;i<lattice.length;i++){
 
 			multiDim.hcode[0] = i;
@@ -246,19 +246,19 @@ public class SaxIndexGenerator {
 
 	static void normalization(ArrayList<Float> list){
 		int length=list.size();
-		//•½‹Ï’l‚ğ‹‚ß‚é
+		//å¹³å‡å€¤ã‚’æ±‚ã‚ã‚‹
 		Float sum=new Float(0),avg,stdsum=new Float(0);
 		Float stddev;
 		for(int i=0;i<length;i++){
 			sum+=list.get(i);
 		}
 		avg=sum/length;
-		//•W€•Î·‚ğ‹‚ß‚é
+		//æ¨™æº–åå·®ã‚’æ±‚ã‚ã‚‹
 		for(int i=0;i<length;i++){
 			stdsum+=(list.get(i)-avg)*(list.get(i)-avg);
 		}
 		stddev=new Float(Math.sqrt(stdsum/length));
-		//³‹K‰»
+		//æ­£è¦åŒ–
 		for(int i=0;i<length;i++){
 			list.set(i, (list.get(i)-avg)/stddev);
 		}
@@ -331,7 +331,7 @@ public class SaxIndexGenerator {
 		String outfile = "result_MDSAX"+dimension+"_"+resolution+"_"+labels+"_.txt";
 
 		SaxIndexGenerator sig = new SaxIndexGenerator(dimension,resolution,labels,window);
-		//Š„‚è“–‚Ä‚é•¶š‚Ìî•ñ‚ğ“Ç‚İ‚Ş(1ŸŒ³‚Ìî•ñj
+		//å‰²ã‚Šå½“ã¦ã‚‹æ–‡å­—ã®æƒ…å ±ã‚’èª­ã¿è¾¼ã‚€(1æ¬¡å…ƒã®æƒ…å ±ï¼‰
 		sig.readLabelInfo("LabelInfo_1_"+resolution+"_"+labels+"_.txt");
 
 		try {
@@ -346,15 +346,15 @@ public class SaxIndexGenerator {
 				String tno = extractMatchString("test(.*).csv",files[i].getName());
 //			for(int i=0;i<3;i++){
 				//File file = files[i];
-				//Œn—ñƒf[ƒ^‚ğ“Ç‚İ‚Ş
+				//æ™‚ç³»åˆ—ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
 				sig.readTimeSeriesData(files[i].getAbsolutePath());
-				//Œn—ñƒf[ƒ^‚ğŠiqƒf[ƒ^‚É•ÏŠ·‚·‚é
+				//æ™‚ç³»åˆ—ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼å­ãƒ‡ãƒ¼ã‚¿ã«å¤‰æ›ã™ã‚‹
 				sig.generateLatticeValues();
-				//SAX‚Ì¶¬
+				//SAXã®ç”Ÿæˆ
 				for(int d=0;d<dimension;d++){
 					String saxindex = sig.makeSAXString_for_MDSAX(d);
 					outFile.write(""+tno+","+d+","+saxindex+"\n");
-					//ƒ‰ƒ“ƒŒƒ“ƒOƒXˆ³k
+					//ãƒ©ãƒ³ãƒ¬ãƒ³ã‚°ã‚¹åœ§ç¸®
 					//String compindex=RunlengthCompression(saxindex);
 					//outFile.write(compindex+"\n");
 					//System.out.println(compindex);
@@ -370,7 +370,7 @@ public class SaxIndexGenerator {
 		String outfile = "result_USAX_"+dimension+"_"+resolution+"_"+labels+"_.csv";
 
 		SaxIndexGenerator sig = new SaxIndexGenerator(dimension,resolution,labels,window);
-		//Š„‚è“–‚Ä‚é•¶š‚Ìî•ñ‚ğ“Ç‚İ‚Ş
+		//å‰²ã‚Šå½“ã¦ã‚‹æ–‡å­—ã®æƒ…å ±ã‚’èª­ã¿è¾¼ã‚€
 		sig.readLabelInfo("LabelInfo_"+dimension+"_"+resolution+"_"+labels+"_.txt");
 
 		try {
@@ -382,7 +382,7 @@ public class SaxIndexGenerator {
 				//String tno = extractMatchString("test(.*).csv",files[i].getName());
 				String tno = extractMatchString("(.*).csv",files[i].getName());
 
-				//‚¿‚á‚ñ‚Æ“Ç‚İ‚±‚ß‚Ä‚¢‚é‚©ƒJƒEƒ“ƒgƒeƒXƒg
+				//ã¡ã‚ƒã‚“ã¨èª­ã¿ã“ã‚ã¦ã„ã‚‹ã‹ã‚«ã‚¦ãƒ³ãƒˆãƒ†ã‚¹ãƒˆ
 				//BufferedReader br;
 				//br = new BufferedReader(new FileReader(files[i].getAbsolutePath()));
 				//String line="";
@@ -390,26 +390,26 @@ public class SaxIndexGenerator {
 				//while((line = br.readLine())!=null){
 				//	d++;
 				//}
-				//System.out.println(i+"‰ñ–ÚF"+d);
+				//System.out.println(i+"å›ç›®ï¼š"+d);
 
 //			for(int i=0;i<3;i++){
 				//File file = files[i];
-				//Œn—ñƒf[ƒ^‚ğ“Ç‚İ‚Ş
+				//æ™‚ç³»åˆ—ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
 				sig.readTimeSeriesData(files[i].getAbsolutePath());
-				//(”äŠrÀŒ±‚Ì‚½‚ßj³‹K‰»Œãƒf[ƒ^‚ğ•Û‘¶‚·‚é
+				//(æ¯”è¼ƒå®Ÿé¨“ã®ãŸã‚ï¼‰æ­£è¦åŒ–å¾Œãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜ã™ã‚‹
 				sig.outputNormalizedData(tno);
-				//Œn—ñƒf[ƒ^‚ğƒqƒ‹ƒxƒ‹ƒgƒR[ƒh‚É•ÏŠ·‚·‚é
+				//æ™‚ç³»åˆ—ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ’ãƒ«ãƒ™ãƒ«ãƒˆã‚³ãƒ¼ãƒ‰ã«å¤‰æ›ã™ã‚‹
 				sig.trans2HilbertValues();
-				//SAX‚Ì¶¬
+				//SAXã®ç”Ÿæˆ
 				String saxindex = sig.makeSAXString();
 				System.out.println(saxindex);
 				outFile.write(""+tno+","+saxindex+"\n");
-				//ƒ‰ƒ“ƒŒƒ“ƒOƒXˆ³k
+				//ãƒ©ãƒ³ãƒ¬ãƒ³ã‚°ã‚¹åœ§ç¸®
 				//String compindex=RunlengthCompression(saxindex);
 				//System.out.println(compindex);
 				//outFile.write(""+tno+","+compindex+"\n");
 
-				//List‚ÌƒŠƒZƒbƒg
+				//Listã®ãƒªã‚»ãƒƒãƒˆ
 				sig.resetData();
 			}
 			outFile.close();
@@ -422,10 +422,10 @@ public class SaxIndexGenerator {
 		
 		//
 		int dimension = 3;
-		int resolution = 9; //‘½ŸŒ³‹óŠÔ‚ÌŠiq‚Ì‰ğ‘œ“xBŠiq‚Ì”‚ÍŠeŸŒ³ 2^resolution ŒÂ‚É‚È‚éB@
-		int labels = 811; //Š„‚è“–‚Ä‚é•„†‚Ì”
-		int window = 5; //•½‹Ï‰»‚·‚éƒEƒCƒ“ƒhƒE•
-		String dirname = "testcsvfiles"; //Œn—ñƒtƒ@ƒCƒ‹‚Ì“ü‚Á‚Ä‚¢‚éƒfƒBƒŒƒNƒgƒŠ–¼
+		int resolution = 9; //å¤šæ¬¡å…ƒç©ºé–“ã®æ ¼å­ã®è§£åƒåº¦ã€‚æ ¼å­ã®æ•°ã¯å„æ¬¡å…ƒ 2^resolution å€‹ã«ãªã‚‹ã€‚ã€€
+		int labels = 811; //å‰²ã‚Šå½“ã¦ã‚‹ç¬¦å·ã®æ•°
+		int window = 5; //å¹³å‡åŒ–ã™ã‚‹ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦å¹…
+		String dirname = "testcsvfiles"; //æ™‚ç³»åˆ—ãƒ•ã‚¡ã‚¤ãƒ«ã®å…¥ã£ã¦ã„ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå
 
 		if(args.length==0){
 			System.err.println("ERROR: Input filename");
@@ -440,9 +440,9 @@ public class SaxIndexGenerator {
 			dirname = args[4];
 		}
 
-		//UniversalSAX‚Å•„†‰»‚·‚éê‡‚Í‚±‚¿‚ç‚ğg‚¤
+		//UniversalSAXã§ç¬¦å·åŒ–ã™ã‚‹å ´åˆã¯ã“ã¡ã‚‰ã‚’ä½¿ã†
 		SaxIndexGenerator.generate_UniversalSAX(dimension, resolution, labels, window, dirname);
-		//MDSAX‚Å•„†‰»‚·‚éê‡‚Í‚±‚¿‚ç‚ğg‚¤
+		//MDSAXã§ç¬¦å·åŒ–ã™ã‚‹å ´åˆã¯ã“ã¡ã‚‰ã‚’ä½¿ã†
 		//SaxIndexGenerator.generate_MDSAX(dimension, resolution, labels, window);
 
 	}
